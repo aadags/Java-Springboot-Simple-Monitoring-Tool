@@ -6,7 +6,7 @@ RUN ls -l
 RUN mvn clean install
 FROM openjdk:11-jdk
 
-ARG JAR_FILE=target/noc-0.0.1.jar
+ARG JAR_FILE=/build/target/noc-0.0.1.jar
 
 WORKDIR /opt/app
 
