@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo "Push to Docker Hub"
                 script {
-                    docker.withRegistry("https://eu.gcr.io/apt-quarter-347815") {
+                    docker.withRegistry("https://cd.lifestoreshealthcare.com:5000") {
                         apiImage.push()
                     }
                 }
