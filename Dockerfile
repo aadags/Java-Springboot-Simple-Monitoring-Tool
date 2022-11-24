@@ -1,15 +1,14 @@
-FROM maven:3-jdk-11
+FROM maven:3-jdk-11 AS build
 
 ADD . /build
 WORKDIR /build
 RUN ls -l
 RUN mvn clean install
+
 FROM openjdk:11-jdk
 
-ARG JAR_FILE=/root/.m2/repository/com/lifestores/noc/0.0.1/noc-0.0.1.jar
+COPY --from=build /build/target/noc-0.0.1.jar app.jar
 
-WORKDIR /opt/app
-
-COPY ${JAR_FILE} app.jar
+EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","app.jar"]
