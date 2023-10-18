@@ -18,43 +18,23 @@ public class NocService {
     @Scheduled(fixedRate = 120000)
     public void queryHealthCheck() throws IOException, InterruptedException {
 
-        //marketplace
+        //healthcheck 1
         try {
-            JSONObject marketPlaceResponse = new JSONObject(queryApi("https://marketplace.lifestoreshealthcare.com/api/health-check"));
-            System.out.println(marketPlaceResponse);
+            JSONObject jsonResponse = new JSONObject(queryApi("https://domain.com/api/health-check"));
+            System.out.println(jsonResponse);
         } catch (Exception e)
         {
-            Response response = sendSlack("Marketplace");
+            Response response = sendSlack("App Name");
             System.out.println(response);
         }
 
-        //marketplace helper
+        //healthcheck 2
         try {
-            JSONObject marketPlaceResponse = new JSONObject(queryApi("https://marketplace-helper.lifestoreshealthcare.com/api/health-check"));
-            System.out.println(marketPlaceResponse);
+            JSONObject jsonResponse = new JSONObject(queryApi("https://domain.com/api/health-check"));
+            System.out.println(jsonResponse);
         } catch (Exception e)
         {
-            Response response = sendSlack("Marketplace Helper");
-            System.out.println(response);
-        }
-
-        //Erp
-        try {
-            JSONObject marketPlaceResponse = new JSONObject(queryApi("https://erp.lifestoreshealthcare.com/api/health-check"));
-            System.out.println(marketPlaceResponse);
-        } catch (Exception e)
-        {
-            Response response = sendSlack("ERP");
-            System.out.println(response);
-        }
-
-        //Erp Helper
-        try {
-            JSONObject marketPlaceResponse = new JSONObject(queryApi("https://erp-helper.lifestoreshealthcare.com/api/health-check"));
-            System.out.println(marketPlaceResponse);
-        } catch (Exception e)
-        {
-            Response response = sendSlack("ERP Helper");
+            Response response = sendSlack("App Name");
             System.out.println(response);
         }
 
@@ -80,11 +60,11 @@ public class NocService {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\n\"channel\":\"health-monitoring\",\n\"attachments\":[\n{\n\t\"mrkdwn_in\": [\"text\"],\n\"color\": \"#d62e0d\",\n\"text\": \""+ app +" (production) is down!\",\n\"footer\": \"Lifestores Healthcare\",\n\"footer_icon\": \"http://lifestoreshealthcare.com/LH%20Flower.png\",\n\"ts\": "+ time +"\n}\n]\n}");
+        RequestBody body = RequestBody.create(mediaType, "{\n\"channel\":\"health-monitoring\",\n\"attachments\":[\n{\n\t\"mrkdwn_in\": [\"text\"],\n\"color\": \"#d62e0d\",\n\"text\": \""+ app +" (production) is down!\",\n\"footer\": \"Lifestores Healthcare\",\n\"footer_icon\": \"http://www.domain.com/logo.png\",\n\"ts\": "+ time +"\n}\n]\n}");
         Request request = new Request.Builder()
                 .url("https://slack.com/api/chat.postMessage")
                 .method("POST", body)
-                .addHeader("Authorization", "Bearer xoxb-792270355745-4420970078018-E1apI9cYMC6xsCni3sys4S6A")
+                .addHeader("Authorization", "Bearer Token")
                 .addHeader("Content-Type", "application/json")
                 .build();
         Response response = client.newCall(request).execute();
